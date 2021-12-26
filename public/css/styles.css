@@ -1,0 +1,31 @@
+#Main{
+    display: table;
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.fof{
+	  display: table-cell;
+	  vertical-align: middle;
+}
+
+.fof h1{
+	  font-size: 50px;
+	  display: inline-block;
+	  padding-right: 12px;
+	  animation: type .5s alternate infinite;
+      color: #888;
+}
+table, td, th {
+	border: 1px solid black;
+}
+  
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+@keyframes type{
+	  from{box-shadow: inset -3px 0px 0px #888;}
+	  to{box-shadow: inset -3px 0px 0px transparent;}
+}
