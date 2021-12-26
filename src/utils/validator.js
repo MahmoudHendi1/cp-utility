@@ -2,7 +2,7 @@ const axios = require('axios');
 const e = require('express');
 
 
-module.exports = async function validator(handels){
+module.exports = async function validator(handles){
    
     const contestIDs = new Set();
     const err=[];
@@ -15,8 +15,8 @@ module.exports = async function validator(handels){
             await response.data.result.forEach( gym => {
                 contestIDs.add(gym.id);
             }); 
-            for(var i = 0 ; i < handels.length;i++){
-                await axios.get('https://codeforces.com/api/user.status?handle='+handels[i])
+            for(var i = 0 ; i < handles.length;i++){
+                await axios.get('https://codeforces.com/api/user.status?handle='+handles[i])
                 .then(response => {
                     if(response.data.status !=='OK'){
                         err.push(response.data.comment);

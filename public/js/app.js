@@ -8,10 +8,10 @@ form.addEventListener('submit',async (e)=>{
 
 
 
-    const handels= form.elements['handels'].value;
+    const handles= form.elements['handles'].value;
     const type=form.elements['type'].options[form.elements['type'].selectedIndex].value;
     
-    const url=`/gyms?handels=${handels}&type=${type}`;
+    const url=`/gyms?handels=${handles}&type=${type}`;
     const data = await fetch(url);
 
     if(data.status===404){
