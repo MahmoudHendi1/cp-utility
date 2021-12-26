@@ -3,7 +3,7 @@ const form = document.querySelector('#form');
 
 form.addEventListener('submit',async (e)=>{
     e.preventDefault();
-    if(document.querySelector('#pdf'))document.querySelector('#pdf').remove();
+    if(document.querySelector('#GYM_tabel'))document.querySelector('#GYM_tabel').remove();
     form.elements['button'].disabled = true;
 
 
@@ -24,6 +24,7 @@ form.addEventListener('submit',async (e)=>{
 
     // Adding the entire table to the body tag
     let table = document.createElement('table');
+    table.setAttribute("id","GYM_tabel");
     table.className="ui celled table";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
