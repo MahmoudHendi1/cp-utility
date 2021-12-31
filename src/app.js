@@ -28,19 +28,19 @@ app.get('',(req, res)=>{
 })
  
 app.get('/gyms',async (req, res)=>{
-    if(!req.query.handels)return res.status(404).send('you have to enter at least one handel');
+    if(!req.query.handles || !req.query.type)return res.status(404).send('you have to enter at least one handle');
 
-    const gyms = await validator(req.query.handels.split(','));
+    const data = await validator(req.query.handles.split(','),req.query.type);
     
-    if(gyms.err.length>0){
-        res.err=gyms.err;
-        return res.status(404).send(gyms);
+    if(data.err.length>0){
+        res.err=data.err;
+        return res.status(404).send(data);
     }
 
-
+    
     res.status(200).send({
-        'ids':array= [...gyms.contestIDs],
-        'err':gyms.err});
+        'gyms':data.gyms,
+        'err':data.err});
     return;
 })
 

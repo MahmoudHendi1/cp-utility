@@ -2,26 +2,27 @@
 
 <html> 
     <title>cp-utility</title>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.5/pdfobject.min.js" integrity="sha512-K4UtqDEi6MR5oZo0YJieEqqsPMsrWa9rGDWMK2ygySdRQ+DtwmuBXAllehaopjKpbxrmXmeBo77vjA2ylTYhRA==" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+   
 <head> 
-  
+    <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
 </head>
 
-<body>
+<body id="body">
+    
     <div id="main" class="ui text container">
-        <div class="ui segments">
         
+        <div class="ui segments">
             </br>
             <a href="/#"><img class="ui fluid image" src="/img/Codeforces_logo.png"></a>
         
             <form id="form" class="ui form segment">
-                 <div class="field">
+                <div class="field">
                     <label>Handles (use ' , ' to split handles)</label>
                     <input type="text" name="handles" placeholder="Ex: NightRage,KoftaIQ">
                 </div>
@@ -29,19 +30,36 @@
                 <div class="field">
                     <label>Type</label>
                     <select class="ui fluid dropdown"  name="type">
-                        <option value="Gym">Gym</option>
-                        <option value="Any">Any</option>
+                        <option value="gym">Gym</option>
+                        <option value="any">Any</option>
                     </select>
                 </div>
 
                 <button class="ui button" name="button" type="submit">Submit</button>
             </form>
         </div>
-    </div>
 
-    <script src="/js/app.js" > </script>
+        <div class="ui segments">
+            <table id="GYM_table" class="ui celled padded fixed table">
+                <thead>
+                <tr>
+                <th class="center aligned">Gym Name</th>
+                <th class="center aligned">Length</th>
+                <th class="center aligned">Contest Format</th>
+                <th class="center aligned">Difficulty</th>
+                </tr>
+                </thead>
+                
+            </table>
+        </div>
 
     
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>    
+    <script src="/js/app.js" > </script>
+
 </body>
 
 

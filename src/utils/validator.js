@@ -2,18 +2,19 @@ const axios = require('axios');
 const e = require('express');
 
 
-module.exports = async function validator(handles){
+module.exports = async function validator(handles,type){
    
-    const contestIDs = new Set();
+    const gymsMap = new Map();
+    const gyms =[];
     const err=[];
 
-    await axios.get('https://codeforces.com/api/contest.list?gym=true')
+    await axios.get(`https://codeforces.com/api/contest.list?${type!=='gym'?'':'gym=true'}`)
     .then(async response => {
         if(response.data.status !=='OK'){
             err.push(response.data.comment);
         }else{
             await response.data.result.forEach( gym => {
-                contestIDs.add(gym.id);
+                gymsMap.set(gym.id,gym);
             }); 
             for(var i = 0 ; i < handles.length;i++){
                 await axios.get('https://codeforces.com/api/user.status?handle='+handles[i])
@@ -22,7 +23,7 @@ module.exports = async function validator(handles){
                         err.push(response.data.comment);
                     }else{
                         response.data.result.forEach(subb => {
-                            contestIDs.delete(subb.contestId);
+                            gymsMap.delete(subb.contestId);
                         });
                     }
                 })
@@ -35,7 +36,10 @@ module.exports = async function validator(handles){
     .catch(error => {
         err.push('Bad user');
     });
-
-    return {contestIDs,err};       
+    gymsMap.forEach((value) => {
+        gyms.push(value);
+    });
+    if(type!=='gym')gyms.reverse();
+    return {gyms,err};       
 
 }

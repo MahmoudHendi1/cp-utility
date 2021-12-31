@@ -1,17 +1,29 @@
 const form = document.querySelector('#form');
+const table = document.querySelector('#GYM_table');
+
+function secondsToHms(s) {
+    s = Number(s);
+    var d = Math.floor(s / 86400);
+    var h = Math.floor(s % 86400 / 3600);
+    var m = Math.floor(s % 86400 % 3600 /60);
+
+    var dDisplay = d > 0 ? d : "";
+    var hDisplay = h > 9 ? h : "0" + h;
+    var mDisplay = m > 9 ? m : "0" + m;
+    return `${dDisplay?dDisplay+":":""} ${hDisplay}:${mDisplay}`; 
+}
 
 
 form.addEventListener('submit',async (e)=>{
     e.preventDefault();
-    if(document.querySelector('#GYM_tabel'))document.querySelector('#GYM_tabel').remove();
+    if(table.querySelector('tbody'))table.querySelector('tbody').remove();
     form.elements['button'].disabled = true;
-
 
 
     const handles= form.elements['handles'].value;
     const type=form.elements['type'].options[form.elements['type'].selectedIndex].value;
     
-    const url=`/gyms?handels=${handles}&type=${type}`;
+    const url=`/gyms?handles=${handles}&type=${type}`;
     const data = await fetch(url);
 
     if(data.status===404){
@@ -22,35 +34,33 @@ form.addEventListener('submit',async (e)=>{
     form.elements['button'].disabled = false;
 
 
-    // Adding the entire table to the body tag
-    let table = document.createElement('table');
-    table.setAttribute("id","GYM_tabel");
-    table.className="ui celled table";
-    let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
-    table.appendChild(thead);
-    table.appendChild(tbody);
-
-
-    let header = document.createElement('tr');
-    let heading_1 = document.createElement('th');
-    heading_1.innerHTML = "Gym Url";
-    header.appendChild(heading_1);
-    thead.appendChild(header);
+    var tbody = table.createTBody();
     
-    (await data.json()).ids.reverse().forEach(id => {
-        let row = document.createElement('tr');
-        let row_data = document.createElement('td');
-        let lnk = document.createElement('a');
+    (await data.json()).gyms.reverse().forEach(gym => {
+        var row = tbody.insertRow();
 
-        lnk.setAttribute("href", `https://codeforces.com/gym/${id}`);
-        lnk.innerHTML = `https://codeforces.com/gym/${id}`;
-        row_data.append(lnk);
-        row.appendChild(row_data);
-        tbody.appendChild(row);
+        var gymName = row.insertCell(0);
+        gymName.setAttribute('class','center aligned')
+        var lnk = document.createElement('a');
+        lnk.setAttribute("href", `https://codeforces.com/gym/${gym.id}`);
+        lnk.innerHTML = gym.name;
+        gymName.append(lnk);
+        
+        var gymDuration = row.insertCell(1);
+        gymDuration.setAttribute('class','center aligned')
+        gymDuration.innerHTML = secondsToHms(gym.durationSeconds);
+        
+        var gymType = row.insertCell(2);
+        gymType.setAttribute('class','center aligned')
+        gymType.innerHTML = gym.type;
+
+        var gymDifficulty =  row.insertCell(3);
+        var stars = document.createElement('div');
+        stars.setAttribute('class','Stars center aligned');
+        stars.setAttribute('style',`--rating: ${gym.difficulty}`);
+        gymDifficulty.append(stars);
+
+        
     });
-    document.getElementById('main').appendChild(table);
-
-
     
 })
