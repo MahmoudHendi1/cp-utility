@@ -27,7 +27,7 @@ app.get('',(req, res)=>{
     })
 })
  
-app.get('/gyms',async (req, res)=>{
+app.get('/contests',async (req, res)=>{
     if(!req.query.handles || !req.query.type)return res.status(404).send('you have to enter at least one handle');
 
     const data = await validator(req.query.handles.split(','),req.query.type);
@@ -39,7 +39,7 @@ app.get('/gyms',async (req, res)=>{
 
     
     res.status(200).send({
-        'gyms':data.gyms,
+        'contests':data.contests,
         'err':data.err});
     return;
 })

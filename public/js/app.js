@@ -1,5 +1,5 @@
 const form = document.querySelector('#form');
-const table = document.querySelector('#GYM_table');
+const table = document.querySelector('#contest_table');
 
 function secondsToHms(s) {
     s = Number(s);
@@ -23,7 +23,7 @@ form.addEventListener('submit',async (e)=>{
     const handles= form.elements['handles'].value;
     const type=form.elements['type'].options[form.elements['type'].selectedIndex].value;
     
-    const url=`/gyms?handles=${handles}&type=${type}`;
+    const url=`/contests?handles=${handles}&type=${type}`;
     const data = await fetch(url);
 
     if(data.status===404){
@@ -36,29 +36,29 @@ form.addEventListener('submit',async (e)=>{
 
     var tbody = table.createTBody();
     
-    (await data.json()).gyms.reverse().forEach(gym => {
+    (await data.json()).contests.reverse().forEach(contest => {
         var row = tbody.insertRow();
 
-        var gymName = row.insertCell(0);
-        gymName.setAttribute('class','center aligned')
+        var contestName = row.insertCell(0);
+        contestName.setAttribute('class','center aligned')
         var lnk = document.createElement('a');
-        lnk.setAttribute("href", `https://codeforces.com/gym/${gym.id}`);
-        lnk.innerHTML = gym.name;
-        gymName.append(lnk);
+        lnk.setAttribute("href", `https://codeforces.com/${type==='gym'?'gym':'contest'}/${contest.id}`);
+        lnk.innerHTML = contest.name;
+        contestName.append(lnk);
         
-        var gymDuration = row.insertCell(1);
-        gymDuration.setAttribute('class','center aligned')
-        gymDuration.innerHTML = secondsToHms(gym.durationSeconds);
+        var contestDuration = row.insertCell(1);
+        contestDuration.setAttribute('class','center aligned')
+        contestDuration.innerHTML = secondsToHms(contest.durationSeconds);
         
-        var gymType = row.insertCell(2);
-        gymType.setAttribute('class','center aligned')
-        gymType.innerHTML = gym.type;
+        var contestType = row.insertCell(2);
+        contestType.setAttribute('class','center aligned')
+        contestType.innerHTML = contest.type;
 
-        var gymDifficulty =  row.insertCell(3);
+        var contestDifficulty =  row.insertCell(3);
         var stars = document.createElement('div');
         stars.setAttribute('class','Stars center aligned');
-        stars.setAttribute('style',`--rating: ${gym.difficulty}`);
-        gymDifficulty.append(stars);
+        stars.setAttribute('style',`--rating: ${contest.difficulty}`);
+        contestDifficulty.append(stars);
 
         
     });
