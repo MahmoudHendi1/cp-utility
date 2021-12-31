@@ -31,7 +31,6 @@ form.addEventListener('submit',async (e)=>{
         return alert('Users not found, make sure to follow the correct format');
     }
   
-    form.elements['button'].disabled = false;
 
 
     var tbody = table.createTBody();
@@ -62,5 +61,7 @@ form.addEventListener('submit',async (e)=>{
 
         
     });
-    
+
+    form.elements['button'].disabled = false;
+
 })
